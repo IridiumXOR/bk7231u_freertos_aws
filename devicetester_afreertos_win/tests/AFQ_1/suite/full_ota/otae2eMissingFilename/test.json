@@ -1,0 +1,86 @@
+{
+  "id": "OTAE2EMissingFilename",
+  "title": "Amazon FreeRTOS OTA E2E Test to test missing file name ",
+  "details": "OTA update for this test case should fail because of missing file name",
+  "execution": {
+    "timeout": 2400000,
+    "mac": {
+      "cmd": "./../../../afq_mac_x86-64",
+      "args": [
+        "run-test",
+        "--test-group",
+        "OTATestMissingFilename",
+        "--device",
+        "{\"board\":\"{{device.id}}\", \"uartConnectivity\" : { \"serialPort\" : \"{{device.connectivity.serialPort}}\"}}",
+        "--src-path",
+        "{{userData.sourcePath}}",
+        "--build-cmds",
+        "{{userData.buildTool.command[:]}}",
+        "--flash-cmds",
+        "{{userData.flashTool.command[:]}}",
+        "--build-image-info",
+        "{\"testsImageName\": \"{{userData.flashTool.buildImageInfo.testsImageName}}\", \"demosImageName\": \"{{userData.flashTool.buildImageInfo.demosImageName}}\"}",
+        "--test-artifacts-path",
+        "{{testData.testArtifactsPath}}",
+        "--test-tmp-src-code-path",
+        "{{testData.sourcePath}}",
+        "--ota-configuration",
+        "{\"otaDemoConfigFilePath\":\"{{userData.otaConfiguration.otaDemoConfigFilePath}}\",\"otaFirmwareFilePath\":\"{{userData.otaConfiguration.otaFirmwareFilePath}}\", \"deviceFirmwareFileName\":\"{{userData.otaConfiguration.deviceFirmwareFileName}}\", \"awsSignerPlatform\":\"{{userData.otaConfiguration.awsSignerPlatform}}\", \"awsSignerCertificateArn\":\"{{userData.otaConfiguration.awsSignerCertificateArn}}\", \"awsUntrustedSignerCertificateArn\":\"{{userData.otaConfiguration.awsUntrustedSignerCertificateArn}}\", \"awsSignerCertificateFileName\":\"{{userData.otaConfiguration.awsSignerCertificateFileName}}\",\"compileCodesignerCertificate\":{{userData.otaConfiguration.compileCodesignerCertificate}}}",
+        "--wifi-enabled",
+        "{{devicepool.features[?(@.name == 'WIFI')].value[0]}}"
+      ]
+    },
+    "linux": {
+      "cmd": "./../../../afq_linux_x86-64",
+      "args": [
+        "run-test",
+        "--test-group",
+        "OTATestMissingFilename",
+        "--device",
+        "{\"board\":\"{{device.id}}\", \"uartConnectivity\" : { \"serialPort\" : \"{{device.connectivity.serialPort}}\"}}",
+        "--src-path",
+        "{{userData.sourcePath}}",
+        "--build-cmds",
+        "{{userData.buildTool.command[:]}}",
+        "--flash-cmds",
+        "{{userData.flashTool.command[:]}}",
+        "--build-image-info",
+        "{\"testsImageName\": \"{{userData.flashTool.buildImageInfo.testsImageName}}\", \"demosImageName\": \"{{userData.flashTool.buildImageInfo.demosImageName}}\"}",
+        "--test-artifacts-path",
+        "{{testData.testArtifactsPath}}",
+        "--test-tmp-src-code-path",
+        "{{testData.sourcePath}}",
+        "--ota-configuration",
+        "{\"otaDemoConfigFilePath\":\"{{userData.otaConfiguration.otaDemoConfigFilePath}}\",\"otaFirmwareFilePath\":\"{{userData.otaConfiguration.otaFirmwareFilePath}}\", \"deviceFirmwareFileName\":\"{{userData.otaConfiguration.deviceFirmwareFileName}}\", \"awsSignerPlatform\":\"{{userData.otaConfiguration.awsSignerPlatform}}\", \"awsSignerCertificateArn\":\"{{userData.otaConfiguration.awsSignerCertificateArn}}\", \"awsUntrustedSignerCertificateArn\":\"{{userData.otaConfiguration.awsUntrustedSignerCertificateArn}}\", \"awsSignerCertificateFileName\":\"{{userData.otaConfiguration.awsSignerCertificateFileName}}\",\"compileCodesignerCertificate\":{{userData.otaConfiguration.compileCodesignerCertificate}}}",
+        "--wifi-enabled",
+        "{{devicepool.features[?(@.name == 'WIFI')].value[0]}}"
+      ]
+    },
+    "win": {
+      "cmd": "./../../../afq_win_x86-64.exe",
+      "args": [
+        "run-test",
+        "--test-group",
+        "OTATestMissingFilename",
+        "--device",
+        "{\"board\":\"{{device.id}}\", \"uartConnectivity\" : { \"serialPort\" : \"{{device.connectivity.serialPort}}\"}}",
+        "--src-path",
+        "{{userData.sourcePath}}",
+        "--build-cmds",
+        "{{userData.buildTool.command[:]}}",
+        "--flash-cmds",
+        "{{userData.flashTool.command[:]}}",
+        "--build-image-info",
+        "{\"testsImageName\": \"{{userData.flashTool.buildImageInfo.testsImageName}}\", \"demosImageName\": \"{{userData.flashTool.buildImageInfo.demosImageName}}\"}",
+        "--test-artifacts-path",
+        "{{testData.testArtifactsPath}}",
+        "--test-tmp-src-code-path",
+        "{{testData.sourcePath}}",
+        "--ota-configuration",
+        "{\"otaDemoConfigFilePath\":\"{{userData.otaConfiguration.otaDemoConfigFilePath}}\",\"otaFirmwareFilePath\":\"{{userData.otaConfiguration.otaFirmwareFilePath}}\", \"deviceFirmwareFileName\":\"{{userData.otaConfiguration.deviceFirmwareFileName}}\", \"awsSignerPlatform\":\"{{userData.otaConfiguration.awsSignerPlatform}}\", \"awsSignerCertificateArn\":\"{{userData.otaConfiguration.awsSignerCertificateArn}}\", \"awsUntrustedSignerCertificateArn\":\"{{userData.otaConfiguration.awsUntrustedSignerCertificateArn}}\", \"awsSignerCertificateFileName\":\"{{userData.otaConfiguration.awsSignerCertificateFileName}}\",\"compileCodesignerCertificate\":{{userData.otaConfiguration.compileCodesignerCertificate}}}",
+        "--wifi-enabled",
+        "{{devicepool.features[?(@.name == 'WIFI')].value[0]}}"
+      ]
+    }
+  }
+}

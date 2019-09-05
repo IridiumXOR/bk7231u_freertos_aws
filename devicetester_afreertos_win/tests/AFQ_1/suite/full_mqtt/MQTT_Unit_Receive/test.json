@@ -1,0 +1,80 @@
+{
+  "id": "MQTT_Unit_Receive",
+  "title": "Amazon FreeRTOS Full MQTT Test",
+  "details": "this test case will run all AFR tests against boards",
+  "execution": {
+    "timeout": 800000,
+    "mac": {
+      "cmd": "./../../../afq_mac_x86-64",
+      "args": [
+        "run-test",
+        "--test-group",
+        "MQTT_Unit_Receive",
+        "--device",
+        "{\"board\":\"{{device.id}}\", \"uartConnectivity\" : { \"serialPort\" : \"{{device.connectivity.serialPort}}\"}}",
+        "--src-path",
+        "{{userData.sourcePath}}",
+        "--build-cmds",
+        "{{userData.buildTool.command[:]}}",
+        "--flash-cmds",
+        "{{userData.flashTool.command[:]}}",
+        "--build-image-info",
+        "{\"testsImageName\": \"{{userData.flashTool.buildImageInfo.testsImageName}}\", \"demosImageName\": \"{{userData.flashTool.buildImageInfo.demosImageName}}\"}",
+        "--test-artifacts-path",
+        "{{testData.testArtifactsPath}}",
+        "--test-tmp-src-code-path",
+        "{{testData.sourcePath}}",
+        "--wifi-enabled",
+        "{{devicepool.features[?(@.name == 'WIFI')].value[0]}}"
+      ]
+    },
+    "linux": {
+      "cmd": "./../../../afq_linux_x86-64",
+      "args": [
+        "run-test",
+        "--test-group",
+        "MQTT_Unit_Receive",
+        "--device",
+        "{\"board\":\"{{device.id}}\", \"uartConnectivity\" : { \"serialPort\" : \"{{device.connectivity.serialPort}}\"}}",
+        "--src-path",
+        "{{userData.sourcePath}}",
+        "--build-cmds",
+        "{{userData.buildTool.command[:]}}",
+        "--flash-cmds",
+        "{{userData.flashTool.command[:]}}",
+        "--build-image-info",
+        "{\"testsImageName\": \"{{userData.flashTool.buildImageInfo.testsImageName}}\", \"demosImageName\": \"{{userData.flashTool.buildImageInfo.demosImageName}}\"}",
+        "--test-artifacts-path",
+        "{{testData.testArtifactsPath}}",
+        "--test-tmp-src-code-path",
+        "{{testData.sourcePath}}",
+        "--wifi-enabled",
+        "{{devicepool.features[?(@.name == 'WIFI')].value[0]}}"
+      ]
+    },
+    "win": {
+      "cmd": "./../../../afq_win_x86-64.exe",
+      "args": [
+        "run-test",
+        "--test-group",
+        "MQTT_Unit_Receive",
+        "--device",
+        "{\"board\":\"{{device.id}}\", \"uartConnectivity\" : { \"serialPort\" : \"{{device.connectivity.serialPort}}\"}}",
+        "--src-path",
+        "{{userData.sourcePath}}",
+        "--build-cmds",
+        "{{userData.buildTool.command[:]}}",
+        "--flash-cmds",
+        "{{userData.flashTool.command[:]}}",
+        "--build-image-info",
+        "{\"testsImageName\": \"{{userData.flashTool.buildImageInfo.testsImageName}}\", \"demosImageName\": \"{{userData.flashTool.buildImageInfo.demosImageName}}\"}",
+        "--test-artifacts-path",
+        "{{testData.testArtifactsPath}}",
+        "--test-tmp-src-code-path",
+        "{{testData.sourcePath}}",
+        "--wifi-enabled",
+        "{{devicepool.features[?(@.name == 'WIFI')].value[0]}}"
+      ]
+    }
+  }
+}

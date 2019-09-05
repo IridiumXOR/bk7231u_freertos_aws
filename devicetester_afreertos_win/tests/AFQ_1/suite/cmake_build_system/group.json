@@ -1,0 +1,6 @@
+{
+  "id":"CmakeBuildSystem",
+  "title":"Amazon FreeRTOS Qualification Group for Cmake Building System Testing",
+  "details":"AFQ Cmake Build System group",
+  "optional": true
+}

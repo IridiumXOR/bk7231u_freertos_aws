@@ -1,0 +1,37 @@
+{
+  "sourcePath": "D:/bk7231_freertos_aws/sdk",
+  "buildTool": {
+    "name": "build",
+    "version": "1.0",
+    "command": [
+      "D:/bk7231_freertos_aws/devicetester_afreertos_win/configs/script_templates/build.bat {{testData.sourcePath}}"
+    ]
+  },
+  "flashTool":{
+    "name": "burn",
+    "version": "1.45",
+    "command": [
+      "..\\..\\..\\..\\..\\..\\sdk\\projects\\beken\\tools\\bk_writer_V1.52_20190709.exe -f{{testData.sourcePath}}/build/vendors/beken/boards/bk7231u/bk7231u_uart_0.0.1.bin@00011000"
+    ]
+  },
+  "clientWifiConfig": {
+    "wifiSSID": "TP-LINK_37B7",
+    "wifiPassword": "1111117231",
+    "wifiSecurityType": "eWiFiSecurityWPA2"
+  },
+  "testWifiConfig": {
+    "wifiSSID": "FAST_5AC4",
+    "wifiPassword": "12345678",
+    "wifiSecurityType": "eWiFiSecurityWPA2"
+  },
+  "otaConfiguration":{
+    "otaDemoConfigFilePath": "..\\..\\..\\..\\..\\..\\sdk\\tests\\common\\ota",
+    "otaFirmwareFilePath":"..\\..\\..\\..\\..\\..\\sdk\\build\\beken\\bk7231u\\bk7231u_uart_0.0.1.bin",
+    "deviceFirmwareFileName":"bk7231u_uart_0.0.1.bin",
+    "awsSignerPlatform":"AmazonFreeRTOS-BEKEN-7231U",
+    "awsSignerCertificateArn":"<arn:partition:service:region:account-id:resource:qualifier>",
+    "awsUntrustedSignerCertificateArn":"<arn:partition:service:region:account-id:resourcetype:resource:qualifier>",
+    "awsSignerCertificateFileName":"<awsSignerCertificate-file-name>",
+    "compileCodesignerCertificate": false
+  }
+}

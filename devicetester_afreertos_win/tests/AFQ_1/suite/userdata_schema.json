@@ -1,0 +1,266 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Schema of AFR userdata in command line.",
+  "type": "object",
+  "properties": {
+    "sourcePath": {
+      "type": "string",
+      "description": "path to the source. E.g. source/dir/abc",
+      "minLength": 1
+    },
+    "buildTool": {
+      "type": "object",
+      "description": "build tool information (name, version, commands)",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "command": {
+          "type": "array",
+          "description": "commands to build the project",
+          "minItems": 1
+        }
+      },
+      "required": [
+        "command",
+        "name",
+        "version"
+      ]
+    },
+    "flashTool": {
+      "type": "object",
+      "description": "flash tool information (name, version, commands)",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "command": {
+          "type": "array",
+          "description": "commands to flash image to the board",
+          "minItems": 1
+        },
+        "buildImageInfo": {
+          "type": "object",
+          "properties": {
+            "testsImageName": {
+              "type": "string"
+            },
+            "demosImageName": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "command",
+        "name",
+        "version"
+      ]
+    },
+    "clientWifiConfig": {
+      "type": "object",
+      "description": "wifi configuration for tests",
+      "oneOf": [
+        {
+          "properties": {
+            "wifiSSID": {
+              "type": "string",
+              "minLength": 1
+            },
+            "wifiPassword": {
+              "type": "string",
+              "minLength": 1
+            },
+            "wifiSecurityType": {
+              "type": "string",
+              "enum": [
+                "eWiFiSecurityWPA",
+                "eWiFiSecurityWEP",
+                "eWiFiSecurityWPA2"
+              ]
+            }
+          },
+          "required": [
+            "wifiSSID",
+            "wifiPassword",
+            "wifiSecurityType"
+          ]
+        },
+        {
+          "properties": {
+            "wifiSSID": {
+              "type": "string",
+              "minLength": 1
+            },
+            "wifiPassword": {
+              "type": "string",
+              "maxLength": 0
+            },
+            "wifiSecurityType": {
+              "type": "string",
+              "enum": [
+                "eWiFiSecurityOpen"
+              ]
+            }
+          },
+          "required": [
+            "wifiSSID",
+            "wifiSecurityType"
+          ]
+        }
+      ]
+    },
+    "testWifiConfig": {
+      "type": "object",
+      "description": "wifi configuration for tests",
+      "oneOf": [
+        {
+          "properties": {
+            "wifiSSID": {
+              "type": "string",
+              "minLength": 1
+            },
+            "wifiPassword": {
+              "type": "string",
+              "minLength": 1
+            },
+            "wifiSecurityType": {
+              "type": "string",
+              "enum": [
+                "eWiFiSecurityWPA",
+                "eWiFiSecurityWEP",
+                "eWiFiSecurityWPA2"
+              ]
+            }
+          },
+          "required": [
+            "wifiSSID",
+            "wifiPassword",
+            "wifiSecurityType"
+          ]
+        },
+        {
+          "properties": {
+            "wifiSSID": {
+              "type": "string",
+              "minLength": 1
+            },
+            "wifiPassword": {
+              "type": "string",
+              "maxLength": 0
+            },
+            "wifiSecurityType": {
+              "type": "string",
+              "enum": [
+                "eWiFiSecurityOpen"
+              ]
+            }
+          },
+          "required": [
+            "wifiSSID",
+            "wifiSecurityType"
+          ]
+        }
+      ]
+    },
+    "otaConfiguration": {
+      "type": "object",
+      "description": "data needed for ota tests",
+      "properties": {
+        "otaDemoConfigFilePath": {
+          "type": "string",
+          "description": "The full path to the aws demo config header file",
+          "minLength": 1
+        },
+        "otaFirmwareFilePath": {
+          "type": "string",
+          "description": "The full path to the OTA image created after the build",
+          "minLength": 1
+        },
+        "deviceFirmwareFileName": {
+          "type": "string",
+          "description": "The full file path on the MCU device where the OTA firmware will download (not mandatory).",
+          "minLength": 1
+        },
+        "awsSignerPlatform": {
+          "type": "string",
+          "description": "This decide the signing algorithm used by the AWS Code Signer."
+        },
+        "awsSignerCertificateArn": {
+          "type": "string",
+          "description": "The ARN (Amazon Resource Name) for the certificate uploaded to ACM (AWS Certificate Manager) when following: https://docs.aws.amazon.com/freertos/latest/userguide/ota-prereqs.html . ACM has a yearly limit on number of certificates can be created (2000) https://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html . Due to this limit we will not automate creation of these certificate. ",
+          "minLength": 1
+        },
+        "awsUntrustedSignerCertificateArn": {
+          "type": "string",
+          "description": "The ARN (Amazon Resource Name) for a certificate uploaded to ACM which your device should not trust - used to test invalid certificate cases.",
+          "minLength": 1
+        },
+        "awsSignerCertificateFileName": {
+          "type": "string",
+          "description": "The full path on the MCU device where the OTA code signer certificate lives. Some devices do not need this field, but it cannot be blank (not mandatory).",
+          "minLength": 1
+        },
+        "compileCodesignerCertificate": {
+          "type": "boolean",
+          "description": "Set to 'true' if the codesigner signature verification certificate is not provisioned/flashed, so it must be compiled into the project in aws_codesigner_certifiate.h"
+        }
+      },
+      "required": [
+        "otaDemoConfigFilePath",
+        "otaFirmwareFilePath",
+        "awsSignerPlatform",
+        "awsSignerCertificateArn",
+        "awsUntrustedSignerCertificateArn",
+        "awsSignerCertificateFileName",
+        "compileCodesignerCertificate"
+      ]
+    },
+    "cmakeConfiguration": {
+      "type": "object",
+      "description": "data needed for cmake tests",
+      "properties": {
+        "boardName": {
+          "type": "string",
+          "description": "Name of board",
+          "minLength": 1
+        },
+        "vendorName": {
+          "type": "string",
+          "description": "Name of vendor",
+          "minLength": 1
+        },
+        "afrToolchainPath": {
+          "type": "string",
+          "description": "Path to afr compiler tool chain if user didn't set compiler path into the PATH environment variable",
+          "minLength": 1
+        },
+        "compilerName": {
+          "type": "string",
+          "description": "Name of compiler",
+          "minLength": 1
+        },
+        "cmakeToolchainPath": {
+          "type": "string",
+          "description": "CMake tool chain file location if user uses customized tool chain file",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "boardName",
+        "vendorName"
+      ]
+    }
+  },
+  "required": [
+    "sourcePath",
+    "buildTool",
+    "flashTool"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "AFQ_1",
+  "title": "Amazon FreeRTOS",
+  "details": "This test suite contains Amazon FreeRTOS qualification tests. The tests validate if the porting layer interfaces for Amazon FreeRTOS libraries (e.g. MQTT, Secure Sockets) function correctly on top of microcontroller based board device drivers.",
+  "resources": [],
+  "remoteLogs": [],
+  "userDataRequired": true,
+  "environmentVariables": [
+    {
+      "key": "clientWifiSSID",
+      "value": "{{userData.clientWifiConfig.wifiSSID}}"
+    },
+    {
+      "key": "clientWifiPassword",
+      "value": "{{userData.clientWifiConfig.wifiPassword}}"
+    },
+    {
+      "key": "clientWifiSecurityType",
+      "value": "{{userData.clientWifiConfig.wifiSecurityType}}"
+    },
+    {
+      "key": "testWifiSSID",
+      "value": "{{userData.testWifiConfig.wifiSSID}}"
+    },
+    {
+      "key": "testWifiPassword",
+      "value": "{{userData.testWifiConfig.wifiPassword}}"
+    },
+    {
+      "key": "testWifiSecurityType",
+      "value": "{{userData.testWifiConfig.wifiSecurityType}}"
+    },
+    {
+      "key": "AWS_ACCESS_KEY_ID",
+      "value": "{{testData.awsCredentials.awsAccessKeyId}}"
+    },
+    {
+      "key": "AWS_SECRET_ACCESS_KEY",
+      "value": "{{testData.awsCredentials.awsSecretAccessKey}}"
+    },
+    {
+      "key": "AWS_REGION",
+      "value": "{{config.awsRegion}}"
+    },
+    {
+      "key": "LOG_FILE_PATH",
+      "value": "{{testData.logFilePath}}"
+    }
+  ]
+}
