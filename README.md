@@ -6,7 +6,9 @@
 
 #### 搭建环境
 
-编译基于`arm gcc windows`版本，比如`gcc-arm-none-eabi-5_4-2016q3-20160926-win32.exe`，安装成功后，将`gcc`路径加入`PATH`环境变量即可。
+- 安装CMake，并确保CMake版本不低于3.13
+- 安装make（MingW或者GNU Make），并将make.exe所在路径添加到`PATH`环境变量
+- 安装arm gcc，编译基于`arm gcc windows`版本，比如`gcc-arm-none-eabi-5_4-2016q3-20160926-win32.exe`，安装成功后，将`gcc`路径加入`PATH`环境变量即可。
 
 
 
@@ -16,7 +18,7 @@ AWS FreeRTOS的编译包含测试和示例两种模式，在工程sdk目录下�
 
 
 
-`cmake -DVENDOR=beken -DBOARD=bk7231u -DCOMPILER=arm-gcc -DAFR_TOOLCHAIN_PATH=D:/zhangheng/tools/env/tools/gnu_gcc/arm_gcc/mingw -S. -Bbuild -G"Unix Makefiles"`
+`cmake -DVENDOR=beken -DBOARD=bk7231u -DCOMPILER=arm-gcc -DAFR_ENABLE_TESTS=0 -DAFR_METADATA_MODE=1 -DAFR_TOOLCHAIN_PATH=D:/zhangheng/tools/env/tools/gnu_gcc/arm_gcc/mingw -S. -Bbuild -G"Unix Makefiles"`
 
 
 
@@ -26,7 +28,7 @@ AWS FreeRTOS的编译包含测试和示例两种模式，在工程sdk目录下�
 
 
 
-> 也可以修改并运行批处理文件`bk7231_freertos_aws\sdk\generate_make.bat`，批处理默认生成示例工程的Makefile
+> 也可以修改并运行批处理文件`bk7231u_freertos_aws\sdk\generate_make.bat`，批处理默认生成示例工程的Makefile
 
 
 
@@ -50,7 +52,7 @@ BK7231U芯片与UART、SPI的连接图如上所示，其中：
 
 ##### SPI烧录
 
-运行`bk7231_freertos_aws\sdk\projects\beken\tools\BKHidToolv2.5.2.exe`并选择`bk7231_freertos_aws\sdk\build\vendors\beken\boards\bk7231u\all.bin`，`all.bin`带`bootloader`和`bk7231u`固件
+运行`bk7231u_freertos_aws\sdk\projects\beken\tools\BKHidToolv2.5.2.exe`并选择`bk7231u_freertos_aws\sdk\build\vendors\beken\boards\bk7231u\all.bin`，`all.bin`带`bootloader`和`bk7231u`固件
 
 上图中的3即为SPI下载接口，下图为放大图，图中上半部分为硬件接口，下载板中有两个接口(”SW SPI”和”HW SPI”)，BK7231U推荐用”HW SPI”，框中P20，P21，P22，P23，CEN对应BK7231U芯片的对应PIN脚，按图1插入演示板即可。与硬件相对应的上位机中（下图下半部分）需要如图所示勾选“SPI HARD 硬件”，在软件左下脚会显示当前选择状态。如果下载板插了”SW SPI”，则上位机要选”SPI SOFT软件”。
 
@@ -64,7 +66,7 @@ BK7231U芯片与UART、SPI的连接图如上所示，其中：
 
 ##### UART升级
 
-如果已经有`bootloader`（例如：已经通过SPI烧录过固件），可以使用`bk7231_freertos_aws\sdk\projects\beken\tools\bk_writer_V1.45_20180803_2M.exe`并选择`bk7231_freertos_aws\sdk\build\vendors\beken\boards\bk7231u\bk7231u_uart_*.bin`
+如果已经有`bootloader`（例如：已经通过SPI烧录过固件），可以使用`bk7231u_freertos_aws\sdk\projects\beken\tools\bk_writer_V1.45_20180803_2M.exe`并选择`bk7231u_freertos_aws\sdk\build\vendors\beken\boards\bk7231u\bk7231u_uart_*.bin`
 
 ![1567577182075](sdk/projects/beken/startup/update_uart_1.png)
 
