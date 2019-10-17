@@ -84,3 +84,69 @@ BK7231U芯片与UART、SPI的连接图如上所示，其中：
 
 
 
+关于bk_writer命令行启动的参数及返回值说明
+
+```bat
+start /wait bk_writer_V1.52_20190909.exe -tBK7231 -pCOM4@1000000 -fbk7231u_uart_0.0.1.bin@00011000 -e2
+
+echo bk_writer return %errorlevel%
+```
+
+返回值`errorlevel`涵义
+
+```c
+ERR_CODE_Success=1,//成功
+ERR_CODE_General=0,//串口被占用或不存在
+ERR_CODE_Read=-1,//flash读取失败
+ERR_CODE_UnProtect=-2,//flash解保护失败
+ERR_CODE_EraseFlash=-3,//flash擦除失败
+ERR_CODE_WriteFlash=-4,//flash写sector失败
+ERR_CODE_WriteCfg=-5,//写cfg失败
+ERR_CODE_WriteSec0=-6,//写sector0失败
+ERR_CODE_Verify=-7,//校验失败
+ERR_CODE_Protect=-8,//flash加保护失败
+ERR_CODE_CAP_BUS=-9,//抢总线失败
+ERR_CODE_SET_BR=-10,//设置串口波特率失败
+
+```
+
+
+
+#### IDT测试
+
+在启动IDT测试前，请修改如下文件
+
+- `bk7231u_freertos_aws\devicetester_afreertos_win\configs\userdata.json`
+
+```json
+{
+  "sourcePath": "D:/bk7231_freertos_aws/sdk",   //the path of source
+  ...
+}
+```
+
+- `bk7231u_freertos_aws\devicetester_afreertos_win\configs\device.json`
+
+```json
+[
+  {
+    ...
+    "devices": [
+      {
+        "id": "bk-c8934844aae8",
+        "connectivity": {
+          "protocol": "uart",
+          "serialPort": "COM4"
+        },
+        "identifiers": [
+          {
+            "name": "serialNo",
+            "value": "4"                     //the port of serial
+          }
+        ]
+      }
+    ]
+  }
+]
+```
+

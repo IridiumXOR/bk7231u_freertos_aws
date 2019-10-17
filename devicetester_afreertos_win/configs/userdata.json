@@ -4,14 +4,14 @@
     "name": "build",
     "version": "1.0",
     "command": [
-      "D:/bk7231_freertos_aws/devicetester_afreertos_win/configs/script_templates/build.bat {{testData.sourcePath}}"
+      "..\\..\\..\\..\\..\\configs\\script_templates\\build.bat {{testData.sourcePath}}"
     ]
   },
   "flashTool":{
     "name": "burn",
     "version": "1.45",
     "command": [
-      "..\\..\\..\\..\\..\\..\\sdk\\projects\\beken\\tools\\bk_writer_V1.52_20190709.exe -f{{testData.sourcePath}}/build/vendors/beken/boards/bk7231u/bk7231u_uart_0.0.1.bin@00011000"
+      "..\\..\\..\\..\\..\\configs\\script_templates\\flash.bat {{testData.sourcePath}} {{device.connectivity.serialPort}}"
     ]
   },
   "clientWifiConfig": {
