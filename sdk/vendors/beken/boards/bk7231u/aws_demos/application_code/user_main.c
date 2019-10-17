@@ -31,6 +31,7 @@ void handle_mqtt_main(char *pwbuf, int blen, int argc, char **argv)
     BaseType_t xUseAlpn = pdFALSE;
     MQTTAgentConnectParams_t xConnectParameters;
 
+    IotSdk_Init();
     if (argc > 1)
     {
         if (0 == strcmp(argv[1], "alpn"))
@@ -96,6 +97,8 @@ void handle_mqtt_main(char *pwbuf, int blen, int argc, char **argv)
         /* Delete the MQTT client. */
         xReturned = MQTT_AGENT_Delete( xMQTTHandle );
     }
+
+    IotSdk_Cleanup();
 }
 
 void handle_ota_main(char *pwbuf, int blen, int argc, char **argv)
