@@ -186,6 +186,7 @@ void net_wlan_init(void)
 		net_ipv6stack_init(&g_mlan.netif);
 #endif /* CONFIG_IPV6 */
 
+		g_uap.ipaddr.addr = INADDR_ANY;
 		ret = netifapi_netif_add(&g_uap.netif, &g_uap.ipaddr,
 					 &g_uap.ipaddr, &g_uap.ipaddr, NULL,
 					 lwip_netif_uap_init, tcpip_input);
@@ -664,18 +665,11 @@ void net_wlan_add_netif(void *mac)
     }
 
     wlan_if->ipaddr.addr = INADDR_ANY;
-    
-	err = netifapi_netif_add(&wlan_if->netif, &wlan_if->ipaddr,
-				 &wlan_if->ipaddr, &wlan_if->ipaddr, (void*)vif_entry,
-				 ethernetif_init, tcpip_input); 
+    wlan_if->netif.state = (void *)vif_entry;
+    vif_entry->priv = &wlan_if->netif;
 
-	if (err) {
-    	os_printf("net_wlan_add_netif failed\r\n");
-    } else {
-        vif_entry->priv = &wlan_if->netif;
-    }
-
-    os_printf("net_wlan_add_netif done!, vif_idx:%d\r\n", vif_idx);
+    /* set link_up for this netif */
+    netif_set_link_up(&wlan_if->netif);
 }
 
 void net_wlan_remove_netif(void *mac)
@@ -706,22 +700,11 @@ void net_wlan_remove_netif(void *mac)
         return;
     }
 
-    /**
-        * zhangheng add:
-        * netif_add clean client_data for dhcp/igmp, etc,
-        * but netif_remove doesn't clean dhcp's client_data
-        * invoke dhcp_cleanup in porting layer instead
-        */
-    dhcp_cleanup(netif);
-
-    err = netifapi_netif_remove(netif); 
-    if(err != ERR_OK) {
-        os_printf("net_wlan_remove_netif failed\r\n");
-    } else {
-        netif->state = NULL;
-    }
-
-    os_printf("net_wlan_remove_netif done!, vif_idx:%d\r\n", vif_idx);
+    netif_set_link_down(netif);
+    memset(&netif->ip_addr, 0, sizeof(ip_addr_t));
+    memset(&netif->netmask, 0, sizeof(ip_addr_t));
+    memset(&netif->gw, 0, sizeof(ip_addr_t));
+    os_printf("netif_set_link_down !, vif_idx:%d\r\n", vif_idx);
 }
 
 

@@ -20,105 +20,6 @@
 #include "aws_dev_mode_key_provisioning.h"
 #include "aws_clientcredential.h"
 
-void handle_mqtt_main(char *pwbuf, int blen, int argc, char **argv)
-{
-    MQTTAgentReturnCode_t xReturned = eMQTTAgentFailure;
-    StaticSemaphore_t xSemaphore = { 0 };
-    MQTTAgentHandle_t xMQTTHandle = NULL;
-    MQTTAgentSubscribeParams_t xSubscribeParams;
-    MQTTAgentPublishParams_t xPublishParameters;
-    BaseType_t xMQTTAgentCreated = pdFALSE;
-    BaseType_t xUseAlpn = pdFALSE;
-    MQTTAgentConnectParams_t xConnectParameters;
-
-    IotSdk_Init();
-    if (argc > 1)
-    {
-        if (0 == strcmp(argv[1], "alpn"))
-        {
-            xUseAlpn = pdTRUE;
-        }
-    }
-
-    memset( &xConnectParameters, 0x0, sizeof( MQTTAgentConnectParams_t ) );
-
-    /* Fill in the MQTTAgentConnectParams_t member that is not const. */
-    xConnectParameters.pcURL = clientcredentialMQTT_BROKER_ENDPOINT;
-    xConnectParameters.xFlags = mqttagentREQUIRE_TLS;
-    xConnectParameters.xURLIsIPAddress = pdFALSE;
-    xConnectParameters.usPort = clientcredentialMQTT_BROKER_PORT;
-    xConnectParameters.pucClientId = ( const uint8_t * ) clientcredentialIOT_THING_NAME;
-    xConnectParameters.usClientIdLength = ( uint16_t ) strlen(
-        ( char * ) xConnectParameters.pucClientId );
-    xConnectParameters.xSecuredConnection = pdTRUE;
-    xConnectParameters.pvUserData = NULL;
-    xConnectParameters.pxCallback = NULL;
-    xConnectParameters.pcCertificate = NULL;
-    xConnectParameters.ulCertificateSize =  0;
-
-    /* Switch ports if requested. */
-    if( xUseAlpn )
-    {
-        xConnectParameters.xFlags |= mqttagentUSE_AWS_IOT_ALPN_443;
-    }
-
-    {
-        /* The MQTT client object must be created before it can be used. */
-        xReturned = MQTT_AGENT_Create( &xMQTTHandle );
-        xMQTTAgentCreated = pdTRUE;
-
-        /* Connect to the broker. */
-        xReturned = MQTT_AGENT_Connect( xMQTTHandle,
-                                        &xConnectParameters,
-                                        pdMS_TO_TICKS( 10000UL ) );
-
-        /* Setup the publish parameters. */
-        memset( &( xPublishParameters ), 0x00, sizeof( xPublishParameters ) );
-        xPublishParameters.pucTopic = ( ( const uint8_t * ) "freertos/tests/echo" );
-        xPublishParameters.pvData = "Hello from cli test.";
-        xPublishParameters.usTopicLength = ( uint16_t ) strlen( ( const char * ) xPublishParameters.pucTopic );
-        xPublishParameters.ulDataLength = ( uint32_t ) strlen( xPublishParameters.pvData );
-        xPublishParameters.xQoS = eMQTTQoS1;
-
-        /* Publish the message. */
-        xReturned = MQTT_AGENT_Publish( xMQTTHandle,
-                                        &( xPublishParameters ),
-                                        pdMS_TO_TICKS( 10000UL ) );
-
-        /* Disconnect the client. */
-        xReturned = MQTT_AGENT_Disconnect( xMQTTHandle, pdMS_TO_TICKS( 10000UL ) );
-    }
-
-    /*Don't forget to reset the flag, since connect parameters are global, all test afterwards would use ALPN. */
-    xConnectParameters.xFlags &= ~mqttagentUSE_AWS_IOT_ALPN_443;
-
-    if( xMQTTAgentCreated == pdTRUE )
-    {
-        /* Delete the MQTT client. */
-        xReturned = MQTT_AGENT_Delete( xMQTTHandle );
-    }
-
-    IotSdk_Cleanup();
-}
-
-void handle_ota_main(char *pwbuf, int blen, int argc, char **argv)
-{
-    //vStartOTAUpdateDemoTask();
-}
-
-static struct cli_command test_cmd[] = {
-    {
-        .name = "mqtt",
-        .help = "mqtt [sub | pub] [-t topic] [-m message]",
-        .function = handle_mqtt_main,
-    },
-    {
-        .name = "ota",
-        .help = "ota",
-        .function = handle_ota_main,
-    }
-};
-
 void prvWifiConnect( void )
 {
     WIFINetworkParams_t xJoinAPParams;
@@ -169,7 +70,6 @@ void user_main( beken_thread_arg_t args )
 
     /* cli init in app_start, so kv init should later than it */
     aos_kv_init();
-    cli_register_commands(test_cmd, sizeof(test_cmd) / sizeof(test_cmd[0]));
 
     /* FIX ME: Perform any hardware initialization, that require the RTOS to be
      * running, here. */

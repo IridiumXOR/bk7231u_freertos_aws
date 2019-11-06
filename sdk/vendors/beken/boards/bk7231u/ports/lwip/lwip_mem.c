@@ -3,6 +3,11 @@
 #include "lwip/sys.h"
 #include "str_pub.h"
 
+#if LWIP_STATS
+#include "lwip/stats.h"
+extern struct stats_ lwip_stats;
+#endif
+
 #if defined(LWIP_USING_SYS_MEM)
 #include "mem_pub.h"
 void mem_init(void)
@@ -91,7 +96,7 @@ void memp_dump_Command( char *pcWriteBuffer, int xWriteBufferLen, int argc, char
 #endif
     }
 
-#ifdef LWIP_DEBUG
+#if LWIP_STATS
 #if MEM_STATS
 	cmd_printf("===== MEM ======\r\n");
 	cmd_printf("avail %d, used %d, max %d\r\n", 
@@ -99,7 +104,17 @@ void memp_dump_Command( char *pcWriteBuffer, int xWriteBufferLen, int argc, char
 					lwip_stats.mem.used, 
 					lwip_stats.mem.max);
 #endif /* MEM_STATS */
-#endif /* LWIP_DEBUG */
+#endif /* LWIP_STATS */
 
     SYS_ARCH_UNPROTECT(old_level);
+}
+
+void mem_stat()
+{
+    extern unsigned char _empty_ram;
+    extern unsigned char _stack_unused;
+#if LWIP_STATS
+    bk_printf("memory: free %d min %d total %d\r\n", xPortGetFreeHeapSize(), xPortGetMinimumEverFreeHeapSize(), &_stack_unused - &_empty_ram);
+	bk_printf("heap  : used %d max %d total %d\r\n", lwip_stats.mem.used, lwip_stats.mem.max, lwip_stats.mem.avail);
+#endif
 }

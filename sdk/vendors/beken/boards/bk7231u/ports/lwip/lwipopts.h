@@ -145,7 +145,7 @@
  * a lot of data that needs to be copied, this should be set high.
  */
 
-#define MEM_SIZE (64*1024)
+#define MEM_SIZE (40*1024)
 
 
 
@@ -414,7 +414,6 @@ The STM32F107 allows computing and verifying the IP, UDP, TCP and ICMP checksums
 /* TCP sender buffer space (bytes). */
 #define TCP_SND_BUF             (3*TCP_MSS)
 
-#define TCP_SND_QUEUELEN        (20)
 
 /* ARP before DHCP causes multi-second delay  - turn it off */
 #define DHCP_DOES_ARP_CHECK            (0)
@@ -430,11 +429,9 @@ The STM32F107 allows computing and verifying the IP, UDP, TCP and ICMP checksums
 #define IP_FRAG                         0
 
 #define MEM_LIBC_MALLOC                (0)
-#define MEM_USE_EXTERNAL_MGMT          (1)
 #define MEM_ALIGNMENT                   4
 
-#define MEMP_MEM_MALLOC                (0)
-#define TCP_MSL (TCP_TMR_INTERVAL)
+#define MEMP_MEM_MALLOC                (1)
 
 #define LWIP_COMPAT_MUTEX_ALLOWED       (1)
 

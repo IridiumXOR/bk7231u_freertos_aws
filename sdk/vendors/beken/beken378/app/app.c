@@ -63,7 +63,8 @@ extern void wpas_thread_start(void);
 void app_init(void)
 {
 #if (!CFG_SUPPORT_RTT)
-    net_wlan_initial();
+    //net_wlan_initial();
+    net_wlan_init();
 #endif
     wpas_thread_start();
 }
@@ -669,6 +670,7 @@ void app_pre_start(void)
 {
     OSStatus ret;
 
+    net_wlan_init();
 #if CFG_SUPPORT_ALIOS
     ret = rtos_init_semaphore(&app_sema, 0);
 #else

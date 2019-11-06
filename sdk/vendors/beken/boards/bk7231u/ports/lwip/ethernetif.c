@@ -120,25 +120,25 @@ const char wlan_name[][6] =
     "wlan2\0",
     "wlan3\0",    
 };
-static void low_level_init(struct netif *netif)
+static void low_level_init(struct netif *netif, u8 type)
 {
+    u8_t hwaddr[NETIF_MAX_HWADDR_LEN];
     VIF_INF_PTR vif_entry = (VIF_INF_PTR)(netif->state);
-    u8 *macptr = (u8*)&vif_entry->mac_addr;
     
 #if LWIP_NETIF_HOSTNAME
     /* Initialize interface hostname */
     netif->hostname = (char*)&wlan_name[vif_entry->index];
 #endif /* LWIP_NETIF_HOSTNAME */    
 
-	//wifi_get_mac_address((char *)wireless_mac, type);
+	wifi_get_mac_address((char *)hwaddr, type);
 	
     /* set MAC hardware address length */
     ETH_INTF_PRT("enter low level!\r\n");
-    ETH_INTF_PRT("mac %2x:%2x:%2x:%2x:%2x:%2x\r\n", macptr[0], macptr[1], macptr[2],
-                 macptr[3], macptr[4], macptr[5]);
+    ETH_INTF_PRT("mac %2x:%2x:%2x:%2x:%2x:%2x\r\n", hwaddr[0], hwaddr[1], hwaddr[2],
+                 hwaddr[3], hwaddr[4], hwaddr[5]);
     
     netif->hwaddr_len = ETHARP_HWADDR_LEN;
-    os_memcpy(netif->hwaddr, macptr, ETHARP_HWADDR_LEN);
+    os_memcpy(netif->hwaddr, hwaddr, ETHARP_HWADDR_LEN);
     /* maximum transfer unit */
     netif->mtu = 1500;
     /* device capabilities */
@@ -276,7 +276,7 @@ ethernetif_init(struct netif *netif)
     netif->linkoutput = low_level_output;
 
     /* initialize the hardware */
-    low_level_init(netif);
+    low_level_init(netif, CONFIG_ROLE_STA);
 
     return ERR_OK;
 }
@@ -317,7 +317,7 @@ err_t lwip_netif_init(struct netif *netif)
 #endif
 
 	/* initialize the hardware */
-	low_level_init(netif);
+	low_level_init(netif, CONFIG_ROLE_STA);
 	return ERR_OK;
 }
 
@@ -336,7 +336,7 @@ err_t lwip_netif_uap_init(struct netif *netif)
 	netif->linkoutput = low_level_output;
 
 	/* initialize the hardware */
-	low_level_init(netif);
+	low_level_init(netif, CONFIG_ROLE_AP);
 
 	return ERR_OK;
 }
