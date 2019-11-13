@@ -1,5 +1,5 @@
 {
-  "sourcePath": "D:/bk7231_freertos_aws/sdk",
+  "sourcePath": "<C:/absolute-path-to/amazon-freertos>",
   "buildTool": {
     "name": "build",
     "version": "1.0",
@@ -15,14 +15,14 @@
     ]
   },
   "clientWifiConfig": {
-    "wifiSSID": "TP-LINK_37B7",
-    "wifiPassword": "1111117231",
-    "wifiSecurityType": "eWiFiSecurityWPA2"
+    "wifiSSID": "<ssid>",
+    "wifiPassword": "<passwd>",
+    "wifiSecurityType": "eWiFiSecurityOpen | eWiFiSecurityWEP | eWiFiSecurityWPA | eWiFiSecurityWPA2"
   },
   "testWifiConfig": {
-    "wifiSSID": "FAST_5AC4",
-    "wifiPassword": "12345678",
-    "wifiSecurityType": "eWiFiSecurityWPA2"
+    "wifiSSID": "<ssid>",
+    "wifiPassword": "<passwd>",
+    "wifiSecurityType": "eWiFiSecurityOpen | eWiFiSecurityWEP | eWiFiSecurityWPA | eWiFiSecurityWPA2"
   },
   "otaConfiguration":{
     "otaDemoConfigFilePath": "..\\..\\..\\..\\..\\..\\sdk\\tests\\common\\ota",
