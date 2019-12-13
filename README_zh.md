@@ -34,7 +34,7 @@ AWS FreeRTOS的编译包含测试和示例两种模式，在工程sdk目录下�
 
 
 
-> 也可以修改并运行批处理文件`sdk\generate_make.bat`，批处理默认生成示例工程的Makefile
+> 也可以修改并运行批处理文件`generate_make.bat`，批处理默认生成示例工程的Makefile
 
 
 
@@ -42,7 +42,7 @@ AWS FreeRTOS的编译包含测试和示例两种模式，在工程sdk目录下�
 
 固件的更新有三种方式，包括SPI烧录、UART升级、OTA升级，在介绍更新前，先了解一下BK7231U的接线，如下图：
 
-![1567579303792](sdk/projects/beken/startup/update_overview.png)
+![1567579303792](projects/beken/startup/update_overview.png)
 
 BK7231U芯片与UART、SPI的连接图如上所示，其中：
 
@@ -58,35 +58,35 @@ BK7231U芯片与UART、SPI的连接图如上所示，其中：
 
 ##### SPI烧录
 
-运行`sdk\projects\beken\tools\BKHidToolv2.5.2.exe`并选择`sdk\build\vendors\beken\boards\bk7231u\all.bin`，`all.bin`带`bootloader`和`bk7231u`固件
+运行`projects\beken\tools\BKHidToolv2.5.2.exe`并选择`build\vendors\beken\boards\bk7231u\all.bin`，`all.bin`带`bootloader`和`bk7231u`固件
 
 上图中的3即为SPI下载接口，下图为放大图，图中上半部分为硬件接口，下载板中有两个接口(”SW SPI”和”HW SPI”)，BK7231U推荐用”HW SPI”，框中P20，P21，P22，P23，CEN对应BK7231U芯片的对应PIN脚，按图1插入演示板即可。与硬件相对应的上位机中（下图下半部分）需要如图所示勾选“SPI HARD 硬件”，在软件左下脚会显示当前选择状态。如果下载板插了”SW SPI”，则上位机要选”SPI SOFT软件”。
 
-![1567577926930](sdk/projects/beken/startup/update_spi_1.png)
+![1567577926930](projects/beken/startup/update_spi_1.png)
 
 
 
 完成硬件连接后，根据下图中的提示完成固件下载
 
-![1567576895349](sdk/projects/beken/startup/update_spi_2.png)
+![1567576895349](projects/beken/startup/update_spi_2.png)
 
 ##### UART升级
 
-如果已经有`bootloader`（例如：已经通过SPI烧录过固件），可以使用`sdk\projects\beken\tools\bk_writer_V1.45_20180803_2M.exe`并选择`sdk\build\vendors\beken\boards\bk7231u\bk7231u_uart_*.bin`
+如果已经有`bootloader`（例如：已经通过SPI烧录过固件），可以使用`projects\beken\tools\bk_writer_V1.45_20180803_2M.exe`并选择`build\vendors\beken\boards\bk7231u\bk7231u_uart_*.bin`
 
-![1567577182075](sdk/projects/beken/startup/update_uart_1.png)
+![1567577182075](projects/beken/startup/update_uart_1.png)
 
 
 
 步骤4中选择文件，当前脚本编译出来的UART升级文件名为`bk7231u_uart_0.0.1.bin`
 
-![1566530229214](sdk/projects/beken/startup/update_uart_2.png)
+![1566530229214](projects/beken/startup/update_uart_2.png)
 
 
 
 步骤5完成后会提示操作成功，如果未成功请重新烧录，烧录时会自动复位开发板，如果未复位成功（会显示操作超时），可以在点击烧录后手动复位开发板
 
-![1567499507943](sdk/projects/beken/startup/update_uart_3.png)
+![1567499507943](projects/beken/startup/update_uart_3.png)
 
 
 

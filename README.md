@@ -35,7 +35,7 @@ Run the following command to compile the test project (eg IDT)
 
 
 
-> You could modify and run  `sdk\generate_make.bat` directly, and the batch will generate the sample project's Makefile by default.
+> You could modify and run  `generate_make.bat` directly, and the batch will generate the sample project's Makefile by default.
 
 
 
@@ -43,7 +43,7 @@ Run the following command to compile the test project (eg IDT)
 
 There are three ways to update firmware, including SPI burning, UART upgrade, OTA upgrade. Before introducing update formware, please understand the wiring of BK7231U：
 
-![1567579303792](sdk/projects/beken/startup/update_overview.png)
+![1567579303792](projects/beken/startup/update_overview.png)
 
 description:
 
@@ -59,35 +59,35 @@ description:
 
 ##### SPI Burning
 
-Run `sdk\projects\beken\tools\BKHidToolv2.5.2.exe` and  select `sdk\build\vendors\beken\boards\bk7231u\all.bin`，`all.bin` contain `bootloader` and `application` firmware.
+Run `projects\beken\tools\BKHidToolv2.5.2.exe` and  select `build\vendors\beken\boards\bk7231u\all.bin`，`all.bin` contain `bootloader` and `application` firmware.
 
 The 3 in the figure above is the SPI download board. The figure below is an enlarged view. The upper part of the figure is the hardware interface. There are two interfaces in the download board ("SW SPI" and "HW SPI"). The BK7231U recommends "HW". SPI", the box P20, P21, P22, P23, CEN corresponds to the corresponding PIN pin of the BK7231U chip, and the demo board can be inserted according to Figure 1. In the upper computer corresponding to the hardware (lower part of the figure below), you need to check “SPI HARD hardware” as shown in the figure, and the current selection status will be displayed in the lower left corner of the software. If the "SW SPI" is inserted in the download board, the host computer should select "SPI SOFT Software".
 
-![1567577926930](sdk/projects/beken/startup/update_spi_1.png)
+![1567577926930](projects/beken/startup/update_spi_1.png)
 
 
 
 After completing the hardware connection, complete the firmware download according to the prompts in the figure below.
 
-![1567576895349](sdk/projects/beken/startup/update_spi_2.png)
+![1567576895349](projects/beken/startup/update_spi_2.png)
 
 ##### UART Upgrade
 
-If the board already has `bootloader` (for example: you have already burned the firmware via SPI), you could use `sdk\projects\beken\tools\bk_writer_V1.45_20180909_2M.exe` and select `sdk\build\vendors\beken\boards\bk7231u\bk7231u_uart_*.bin`
+If the board already has `bootloader` (for example: you have already burned the firmware via SPI), you could use `projects\beken\tools\bk_writer_V1.45_20180909_2M.exe` and select `build\vendors\beken\boards\bk7231u\bk7231u_uart_*.bin`
 
-![1567577182075](sdk/projects/beken/startup/update_uart_1.png)
+![1567577182075](projects/beken/startup/update_uart_1.png)
 
 
 
 Select the file in step 4, and the UART upgrade file compiled by make is named `bk7231u_uart_0.0.1.bin` at present.
 
-![1566530229214](sdk/projects/beken/startup/update_uart_2.png)
+![1566530229214](projects/beken/startup/update_uart_2.png)
 
 
 
 After step 5 is completed, the operation will be successful. Otherwise, please re-burn it. When the programming is started, the development board will be reset automatically. If it is not reset successfully (the operation will time out), you can manually reset the development board after clicking Burn.
 
-![1567499507943](sdk/projects/beken/startup/update_uart_3.png)
+![1567499507943](projects/beken/startup/update_uart_3.png)
 
 
 
